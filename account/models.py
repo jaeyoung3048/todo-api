@@ -22,11 +22,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=128,
     )
 
-    username = models.CharField(
-        unique=True,
-        max_length=128,
-    )
-
     first_name = models.CharField(
         blank=False,
         max_length=128
@@ -46,5 +41,5 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     EMAIL_FIELDS = 'email'
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
