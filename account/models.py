@@ -1,4 +1,3 @@
-from rest_framework_simplejwt.models import TokenUser
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
@@ -9,7 +8,7 @@ import uuid
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    object = UserManager()
+    objects = UserManager()
 
     uid = models.UUIDField(
         unique=True,
