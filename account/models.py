@@ -1,3 +1,4 @@
+from rest_framework_simplejwt.models import TokenUser
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
@@ -42,4 +43,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELDS = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']
+
+

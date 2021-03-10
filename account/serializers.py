@@ -16,9 +16,16 @@ class UserSigninSerializer(ModelSerializer):
         fields = "__all__"
 
 
-'''class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token['name'] = user.name'''
+        token['email'] = user.email
+        token["permission"] = {
+            "is_staff": user.is_staff,
+            "is_admin": user.is_admin,
+            "is_superuser": user.is_super,
+        }
+
+        return token

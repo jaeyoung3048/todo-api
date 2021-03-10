@@ -1,7 +1,7 @@
 from mysite.settings.base import *
 from utils.secrets import *
 
-DEBUG = True
+DEBUG = False
 
 DATABASES = {
     'default' : {
