@@ -9,10 +9,10 @@ client = boto3.client(
 )
 
 
-def send_sms(phoneNumber, Message, aws=client):
+def send_sms(phoneNumber, message, aws=client):
     res = aws.publish(
         PhoneNumber= "+82"+phoneNumber,
-        Message=Message
+        Message=message
     )
 
     return res
