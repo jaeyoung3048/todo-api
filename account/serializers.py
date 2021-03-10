@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 
 from account.models import User
 
@@ -25,7 +25,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["permission"] = {
             "is_staff": user.is_staff,
             "is_admin": user.is_admin,
-            "is_superuser": user.is_super,
+            "is_superuser": user.is_superuser,
         }
+
+        usermodels = User.object.get(email=user.email)
+        usermodels.refresh_token = token
+        usermodels.save()
 
         return token
