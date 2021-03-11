@@ -9,6 +9,8 @@ from .serializers import UserSigninSerializer, UserSerializer
 from .models import User
 from utils import aws
 
+import random
+
 
 @api_view(["POST"])
 def sms_authentication(request, ):
@@ -21,16 +23,20 @@ def sms_authentication(request, ):
         res["phoneNumber"] = "This field is required."
         status_code = status.HTTP_400_BAD_REQUEST
 
-    elif "message" not in request.data:
-
-        res["message"] = "This field is required."
-        status_code = status.HTTP_400_BAD_REQUEST
-
     else:
         phoneNumber = request.data["phoneNumber"]
-        message = request.data["message"]
 
-        sms_result = aws.send_sms(phoneNumber, message)
+        rnum = random.randint(0, 9)
+        list = []
+
+        for i in range(6):
+            while rnum in list:
+                rnum = random.randint(0, 9)  # 중복되면 다시 뽑기
+            list.append(rnum)
+
+        msg = "휴대폰 인증 번호는 \""+str(''.join(map(str, list)))+"\" 입니다."
+
+        sms_result = aws.send_sms(phoneNumber=phoneNumber, message=msg)
 
         if sms_result["ResponseMetadata"]["HTTPStatusCode"] == 200:
             res={
@@ -49,10 +55,3 @@ class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-@api_view(["GET"])
-def testview(request):
-
-    phoneNumber = request.data
-
-    return Response(str(type(phoneNumber)), status.HTTP_200_OK)
