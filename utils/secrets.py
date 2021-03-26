@@ -10,7 +10,7 @@ with open(secret_file) as f:
     secrets = json.loads(f.read())
 
 
-def get_secret(setting ,secrets=secrets):
+def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
