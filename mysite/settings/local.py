@@ -14,18 +14,13 @@ DATABASES = {
     }
 }
 
-AWS_REGION = "ap-northeast-2"
+AWS_REGION = 'ap-northeast-2'
+AWS_STORAGE_BUCKET_NAME = 'django-todo-ex'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
 
-AWS_STORAGE_BUCKET_NAME = 'django_todo_ex'
 
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
-    AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024000000 # value in bytes 1GB here
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1024000000
 
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-
-MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-AWS_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'mysite.asset_storage.S3DefaultStorage'
+STATICFILES_STORAGE = 'mysite.asset_storage.S3StaticStorage'
