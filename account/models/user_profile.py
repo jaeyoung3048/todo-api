@@ -1,13 +1,13 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+import os
+
+from random import randint
+
 from django.db import models
-from django.utils.timezone import now
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.timezone import now
 
-from account.manager import UserManager
-
-import uuid, os
-from random import randint
+from account.models.user import User
 
 
 def upload_image(instance, filename):
@@ -16,49 +16,6 @@ def upload_image(instance, filename):
   return '%s' % (
       now().strftime('%Y%m%d')+'_'+str(randint(10000000, 99999999))
   )
-
-
-class User(AbstractBaseUser, PermissionsMixin):
-
-    objects = UserManager()
-
-    uid = models.UUIDField(
-        unique=True,
-        editable=False,
-        default=uuid.uuid4,
-        verbose_name='Public identifier'
-    )
-
-    email = models.EmailField(
-        unique=True,
-        max_length=128,
-    )
-
-    first_name = models.CharField(
-        blank=False,
-        max_length=128
-    )
-
-    last_name = models.CharField(
-        blank=False,
-        max_length=128
-    )
-
-    is_staff = models.BooleanField(
-        default=False
-    )
-
-    is_admin = models.BooleanField(
-        default=False
-    )
-
-    refresh_token = models.TextField(
-        null=True,
-        default=None,
-    )
-
-    EMAIL_FIELDS = 'email'
-    USERNAME_FIELD = 'email'
 
 
 class Profile(models.Model):
