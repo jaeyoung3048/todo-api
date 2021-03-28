@@ -37,8 +37,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=False
     )
 
-    is_admin = models.BooleanField(
+    is_superuser = models.BooleanField(
         default=False
+    )
+
+    is_active = models.BooleanField(
+        default=True
     )
 
     refresh_token = models.TextField(
