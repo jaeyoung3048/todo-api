@@ -12,10 +12,10 @@ from utils import aws
 import random
 
 
+# TODO: add for custom error, exception, permissions
 @api_view(["POST"])
 @authentication_classes(["AllowAny"])
 def sms_authentication_view(request, ):
-
     res = {}
     status_code = status.HTTP_200_OK
 
@@ -35,12 +35,12 @@ def sms_authentication_view(request, ):
                 rnum = random.randint(0, 9)  # 중복되면 다시 뽑기
             list.append(rnum)
 
-        msg = "휴대폰 인증 번호는 \""+str(''.join(map(str, list)))+"\" 입니다."
+        msg = "휴대폰 인증 번호는 \"" + str(''.join(map(str, list))) + "\" 입니다."
 
         sms_result = aws.send_sms(phoneNumber=phoneNumber, message=msg)
 
         if sms_result["ResponseMetadata"]["HTTPStatusCode"] == 200:
-            res={
+            res = {
                 "success": "Successful send sms"
             }
 
@@ -72,6 +72,5 @@ class SigninView(TokenObtainPairView):
 
 
 class SignupView(generics.CreateAPIView):
-
     queryset = User.objects.all()
     serializer_class = UserSerializer
