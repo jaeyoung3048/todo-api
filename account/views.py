@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import status
@@ -13,7 +13,8 @@ import random
 
 
 @api_view(["POST"])
-def sms_authentication(request, ):
+@authentication_classes(["AllowAny"])
+def sms_authentication_view(request, ):
 
     res = {}
     status_code = status.HTTP_200_OK
@@ -46,6 +47,26 @@ def sms_authentication(request, ):
     return Response(res, status_code)
 
 
+@api_view(["POST"])
+def account_active_state_view(request, ):
+    res = {}
+    status_code = status.HTTP_200_OK
+
+    account = User.objects.get(email=request.data["email"])
+
+    if request.data["active"] is False:
+        account.is_active = False
+        account.save()
+        res["success"] = "Successfully account deactive"
+
+    else:
+        account.is_active = True
+        account.save()
+        res["success"] = "Successfully account active"
+
+    return Response(res, status_code)
+
+
 class SigninView(TokenObtainPairView):
     serializer_class = UserSigninSerializer
 
@@ -54,4 +75,3 @@ class SignupView(generics.CreateAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
