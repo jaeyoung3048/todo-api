@@ -12,6 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     uid = models.UUIDField(
         unique=True,
+        primary_key=True,
         editable=False,
         default=uuid.uuid4,
         verbose_name='Public identifier'
