@@ -16,17 +16,18 @@ import random
 
 @api_view(["POST"])
 @authentication_classes([AllowAny])
-def sms_authentication_view(request, ):
+def sms_authentication_view(request, phonenumber):
     res = {}
     status_code = status.HTTP_200_OK
 
-    if "phoneNumber" not in request.data:
+    if not phonenumber:
 
-        res["phoneNumber"] = "This field is required."
+        res["phoneNumber"] = "This parameter is required."
         status_code = status.HTTP_400_BAD_REQUEST
 
     else:
-        phoneNumber = request.data["phoneNumber"]
+
+        phoneNumber = "+82" + phonenumber[1:]
 
         rnum = random.randint(0, 9)
         list = []
