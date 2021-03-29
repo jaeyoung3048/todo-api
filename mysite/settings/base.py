@@ -116,7 +116,7 @@ SIMPLE_JWT = {
     'ISSUER': None,
 
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'AUTH_HEADER_NAME': 'AUTHORIZATION',
     'USER_ID_FIELD': 'uid',
     'USER_ID_CLAIM': 'uuid',
 
