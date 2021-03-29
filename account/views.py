@@ -1,9 +1,11 @@
 from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from rest_framework import generics
 from rest_framework import status
 
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from account.serializers import UserSigninSerializer, UserSerializer
 from account.models.user import User
@@ -12,9 +14,8 @@ from utils import aws
 import random
 
 
-# TODO: add for custom error, exception, permissions
 @api_view(["POST"])
-@authentication_classes(["AllowAny"])
+@authentication_classes([AllowAny])
 def sms_authentication_view(request, ):
     res = {}
     status_code = status.HTTP_200_OK
@@ -32,7 +33,7 @@ def sms_authentication_view(request, ):
 
         for i in range(6):
             while rnum in list:
-                rnum = random.randint(0, 9)  # 중복되면 다시 뽑기
+                rnum = random.randint(0, 9)
             list.append(rnum)
 
         msg = "휴대폰 인증 번호는 \"" + str(''.join(map(str, list))) + "\" 입니다."
@@ -48,6 +49,7 @@ def sms_authentication_view(request, ):
 
 
 @api_view(["POST"])
+@authentication_classes([JWTAuthentication])
 def account_active_state_view(request, ):
     res = {}
     status_code = status.HTTP_200_OK
@@ -72,5 +74,10 @@ class SigninView(TokenObtainPairView):
 
 
 class SignupView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class ProfileView(generics.RetrieveDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

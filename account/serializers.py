@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 
 from account.models.user import User
+from account.models.user_profile import Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -41,3 +42,10 @@ class UserSigninSerializer(TokenObtainPairSerializer):
         usermodels.save()
 
         return token
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["email", "first_name", "last_name", "photo"]
+        read_only_fields = ["email"]
