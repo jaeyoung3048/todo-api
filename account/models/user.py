@@ -52,3 +52,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELDS = 'email'
     USERNAME_FIELD = 'email'
+
+    class Meta:
+        db_table = "Account.U"

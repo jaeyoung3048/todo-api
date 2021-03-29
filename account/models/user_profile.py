@@ -40,6 +40,9 @@ class Profile(models.Model):
         null=True
     )
 
+    class Meta:
+        db_table = "Account.P"
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
