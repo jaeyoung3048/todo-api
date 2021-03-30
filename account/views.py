@@ -15,10 +15,11 @@ import random
 
 
 @api_view(["POST"])
-@authentication_classes([AllowAny])
-def sms_authentication_view(request, phonenumber):
+def sms_authentication_view(request):
     res = {}
     status_code = status.HTTP_200_OK
+
+    phonenumber = request.GET.get('phonenumber', None)
 
     if not phonenumber:
 
@@ -26,8 +27,6 @@ def sms_authentication_view(request, phonenumber):
         status_code = status.HTTP_400_BAD_REQUEST
 
     else:
-
-        phoneNumber = "+82" + phonenumber[1:]
 
         rnum = random.randint(0, 9)
         list = []
@@ -39,7 +38,7 @@ def sms_authentication_view(request, phonenumber):
 
         msg = "휴대폰 인증 번호는 \"" + str(''.join(map(str, list))) + "\" 입니다."
 
-        sms_result = aws.send_sms(phoneNumber=phoneNumber, message=msg)
+        sms_result = aws.send_sms(phoneNumber=phonenumber, message=msg)
 
         if sms_result["ResponseMetadata"]["HTTPStatusCode"] == 200:
             res = {
