@@ -15,7 +15,7 @@ DATABASES = {
 }
 
 AWS_REGION = 'ap-northeast-2'
-AWS_STORAGE_BUCKET_NAME = 'django-todo-ex'
+AWS_STORAGE_BUCKET_NAME = 'jaeyoung-django-todo'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
 
 
