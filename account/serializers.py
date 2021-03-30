@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["email", "password", "first_name", "last_name", "is_staff", "is_admin"]
+        fields = ["email", "password", "first_name", "last_name", "is_staff", "is_superuser"]
         write_only_fields = ["password"]
 
 
@@ -33,7 +33,6 @@ class UserSigninSerializer(TokenObtainPairSerializer):
         token['email'] = user.email
         token["permission"] = {
             "is_staff": user.is_staff,
-            "is_admin": user.is_admin,
             "is_superuser": user.is_superuser,
         }
 
