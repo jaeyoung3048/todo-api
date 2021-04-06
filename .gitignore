@@ -1,7 +1,15 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+#environment directory
 env
+
+#secret file
 *secrets.json*
+
+#unnecessary file
 .idea
 .DS_Store
-.idea
+
+#migration etc file
+*migration*
+
