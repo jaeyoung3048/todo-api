@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'storages',
 
     'account',
+    'todo',
 ]
 
 AUTH_USER_MODEL = 'account.User'
