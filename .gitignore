@@ -11,5 +11,8 @@ env
 .DS_Store
 
 #migration etc file
-*migration*
+*migrations*
 
+#__pycache__ remove
+*pycache*
+*.pyc
