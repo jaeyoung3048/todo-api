@@ -9,4 +9,4 @@ class Tag(models.Model):
         return self.name
 
     class Meta:
-        db_table = "todo.T"
+        db_table = "todo.Tag"
